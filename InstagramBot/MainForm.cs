@@ -15,20 +15,12 @@ using OpenQA.Selenium;
 
 /// <summary>
 /// TODO
-/// 1) Debug Closing when browser closed            +
-/// 2) Thread for second task                       +
 /// 3) Debug info 
-/// 4) Count of User filter using                   +
-/// 5) Count of post filter using                   +
 /// 6) try/catch for every iwebdriver call
 /// 7) Check of link which user input
-/// 8) Open dialog for source base                  +
-/// 9) Liking option                                +
-/// 10) Subscribe option                            +
 /// 11) All str identifiers move to config file
 /// 12) Try without ref (Filtering base)
 /// 13) Page not found catch
-/// 14) Analize of forbidden words GetFollowerState +
 /// 15) When Navigate add check for not found page
 /// </summary>
 namespace InstagramBot
@@ -37,6 +29,7 @@ namespace InstagramBot
     public partial class MainForm : Form
     {
         private Instagram instagram;
+
         public MainForm(Instagram instagram)
         {
             InitializeComponent();
@@ -77,8 +70,6 @@ namespace InstagramBot
 
         #endregion
 
-
-
         #region Functional
 
         private void BaseFormingProccess()
@@ -113,6 +104,11 @@ namespace InstagramBot
             };
         }
 
+        private uint IntToUint(int value)
+        {
+            return value >= 0 ? (uint)value : 0;
+        }
+
         private void FilteringBegingButton_Click(object sender, EventArgs e)
         {
             if (BaseFilterFilepathTextBox.Text != string.Empty && BaseFilepathAfterFilteringTextBox.Text != string.Empty)
@@ -120,7 +116,19 @@ namespace InstagramBot
                 FiltersStatus filtersStatus = GetFiltersStatus();
                 if(filtersStatus.OneFilterEnabled())
                 {
-                    Thread filteringThread = new Thread(() => FilteringProccess(ref filtersStatus));
+                    FilteringParameters filteringParameters = new FilteringParameters()
+                    {
+                        FollowersMinCount = IntToUint(FollowersCount.MinValue),
+                        FollowersMaxCount = IntToUint(FollowersCount.MaxValue),
+                        PostsMinCount = IntToUint(PostsCount.MinValue),
+                        PostsMaxCount = IntToUint(PostsCount.MaxValue),
+                        SubscriptionsMinCount = IntToUint(SubscriptionsCount.MinValue),
+                        SubscriptionsMaxCount = IntToUint(SubscriptionsCount.MaxValue)
+                    };
+                    Thread filteringThread = new Thread(() => instagram.FilteringProccess(
+                        ref filtersStatus,
+                        BaseFilterFilepathTextBox.Text, BaseFilepathAfterFilteringTextBox.Text,
+                        filteringParameters));
                     filteringThread.Start();
                     return;
                 }
@@ -129,7 +137,6 @@ namespace InstagramBot
         }
 
         #endregion
-
 
         private void SetButtonsEnableStatus(bool status)
         {
@@ -147,6 +154,7 @@ namespace InstagramBot
             });
 
         }
+
         private void WorkWithBaseProccess()
         {
             SetButtonsEnableStatus(false);
@@ -172,13 +180,12 @@ namespace InstagramBot
             instagram.RunTasks(BaseToWorkFilepathTextBox.Text, instaTasks);
             SetButtonsEnableStatus(true);
         }
+
         private void WorkWithBaseStartButton_Click(object sender, EventArgs e)
         {
             Thread workThread = new Thread(WorkWithBaseProccess);
             workThread.Start();
         }
-
-
 
         private void BaseToWorkFilepathBrowseButton_Click(object sender, EventArgs e)
         {

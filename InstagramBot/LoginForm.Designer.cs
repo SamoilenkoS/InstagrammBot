@@ -69,7 +69,7 @@
             this.LoginTextBox.Name = "LoginTextBox";
             this.LoginTextBox.Size = new System.Drawing.Size(100, 20);
             this.LoginTextBox.TabIndex = 3;
-            this.LoginTextBox.Text = "lebenaufcredit";
+            this.LoginTextBox.Text = "blood_s_honey";
             // 
             // PasswordTextBox
             // 
@@ -77,7 +77,7 @@
             this.PasswordTextBox.Name = "PasswordTextBox";
             this.PasswordTextBox.Size = new System.Drawing.Size(100, 20);
             this.PasswordTextBox.TabIndex = 4;
-            this.PasswordTextBox.Text = "qqFITTOPPT123";
+            this.PasswordTextBox.Text = "7-cNNSvr";
             this.PasswordTextBox.UseSystemPasswordChar = true;
             this.PasswordTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PasswordTextBox_KeyDown);
             // 

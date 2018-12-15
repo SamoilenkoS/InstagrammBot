@@ -11,21 +11,21 @@ namespace InsagramApiByHands
             followerState.LeaveInList = followerState.FollowerObject.AvatarEnable;
         }
 
-        public static void FollowersCountFilter(FollowerState followerState, int minValue, int maxValue)
+        public static void FollowersCountFilter(FollowerState followerState, uint? minValue, uint? maxValue)
         {
             followerState.LeaveInList = 
                 (followerState.FollowerObject.FollowersCount >= minValue) && 
                 (followerState.FollowerObject.FollowersCount <= maxValue);
         }
 
-        public static void PostsCountFilter(FollowerState followerState, int minValue, int maxValue)
+        public static void PostsCountFilter(FollowerState followerState, uint? minValue, uint? maxValue)
         {
             followerState.LeaveInList =
                  (followerState.FollowerObject.PostsCount >= minValue) &&
                  (followerState.FollowerObject.PostsCount <= maxValue);
         }
 
-        public static void SubscriptionsCountFilter(FollowerState followerState, int minValue, int maxValue)
+        public static void SubscriptionsCountFilter(FollowerState followerState, uint? minValue, uint? maxValue)
         {
             followerState.LeaveInList =
                  (followerState.FollowerObject.SubscriptionsCount >= minValue) &&

@@ -286,11 +286,9 @@ namespace InsagramApiByHands
             };
         }
 
-        private void FilteringProccess(ref FiltersStatus filtersStatus, 
+        public void FilteringProccess(ref FiltersStatus filtersStatus, 
             string baseToFilterFilepath,string baseFilepathAfterFiltering,
-            int? followersMinCount,int? followersMaxCount, 
-            int? postsMinCount, int? postsMaxCount, 
-            int? subscriptionsMinCount, int? subscriptionsMaxCount)
+          FilteringParameters filteringParameters)
         {
             StreamWriter streamWriter = new StreamWriter("temp.txt");
             //сообщить о получении базы
@@ -325,8 +323,8 @@ namespace InsagramApiByHands
             {
                 foreach (var followerState in followersList)
                 {
-                    Filters.FollowersCountFilter(followerState, 
-                        followersMinCount??0, followersMaxCount??100000);
+                    Filters.FollowersCountFilter(followerState,
+                       filteringParameters.FollowersMinCount, filteringParameters.FollowersMaxCount);
                 }
                 foreach (var followerNickname in (from follower in followersList where !follower.LeaveInList select follower.FollowerObject.Nickname).ToList())
                 {
@@ -338,7 +336,7 @@ namespace InsagramApiByHands
             {
                 foreach (var followerState in followersList)
                 {
-                    Filters.PostsCountFilter(followerState, postsMinCount??0, postsMaxCount??100000);
+                    Filters.PostsCountFilter(followerState, filteringParameters.PostsMinCount, filteringParameters.PostsMaxCount);
                 }
                 foreach (var followerNickname in (from follower in followersList where !follower.LeaveInList select follower.FollowerObject.Nickname).ToList())
                 {
@@ -350,7 +348,7 @@ namespace InsagramApiByHands
             {
                 foreach (var followerState in followersList)
                 {
-                    Filters.SubscriptionsCountFilter(followerState, subscriptionsMinCount ?? 0, subscriptionsMaxCount ?? 100000);
+                    Filters.SubscriptionsCountFilter(followerState, filteringParameters.SubscriptionsMinCount, filteringParameters.SubscriptionsMaxCount);
                 }
                 foreach (var followerNickname in (from follower in followersList where !follower.LeaveInList select follower.FollowerObject.Nickname).ToList())
                 {

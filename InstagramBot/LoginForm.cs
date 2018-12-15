@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using InsagramApiByHands;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 
 namespace InstagramBot
 {
@@ -27,17 +17,10 @@ namespace InstagramBot
         {
             instagram.LoginAndDisableNotifications(LoginTextBox.Text, PasswordTextBox.Text);
             
-            MainForm mainForm = new MainForm(iWebDriver);
+            MainForm mainForm = new MainForm(instagram);
             Hide();
             mainForm.ShowDialog();
             Close();
-        }
-
-        
-
-        private void HideWebDriverWindow()
-        {
-
         }
 
         private void PasswordTextBox_KeyDown(object sender, KeyEventArgs e)
